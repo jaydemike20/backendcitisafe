@@ -76,11 +76,21 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 
+# connected to the postgreSQL
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+        "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "citisafeapp",
+        "USER": "postgres",
+        "PASSWORD": "@Jayde15",
+        "HOST": "localhost",  # Change this if your PostgreSQL server is on a different host
+        "PORT": "5432", 
+        },
+    
 }
 
 
