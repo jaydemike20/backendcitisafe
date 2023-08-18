@@ -39,7 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'djoser',
+    'rest_framework.authtoken',
+
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+
+    ),
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,18 +87,18 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # connected to the postgreSQL
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-        "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "citisafeapp",
-        "USER": "postgres",
-        "PASSWORD": "@Jayde15",
-        "HOST": "localhost",  # Change this if your PostgreSQL server is on a different host
-        "PORT": "5432", 
-        },
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+        # "default": {
+        # "ENGINE": "django.db.backends.postgresql",
+        # "NAME": "citisafeapp",
+        # "USER": "postgres",
+        # "PASSWORD": "@Jayde15",
+        # "HOST": "localhost",  # Change this if your PostgreSQL server is on a different host
+        # "PORT": "5432", 
+        # },
     
 }
 
@@ -134,3 +143,17 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# mailtrap config
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER = '061df45eb6ebea'
+EMAIL_HOST_PASSWORD = '98494b8a33eec4'
+EMAIL_PORT = '2525'
+
+# my djoser
+DJOSER = {
+    "SEND_ACTIVATION_EMAIL": True,
+    "SEND_CONFIRMATION_EMAIL": True,
+    "ACTIVATION_URL": 'activation/{uid}/{token}',
+    'LOGIN_FIELD': 'email'
+}
