@@ -5,10 +5,17 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 # Create your models here.
-class Profile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    userRole = models.CharField(max_length=20)
-    middleName = models.CharField(max_length=50)
-    address = models.CharField(max_length=100)
-    contactNumber = models.CharField(max_length=13)
+class User(models.Model):
+    class Role(models.TextChoices):
+        ADMIN = "ADMIN", 'Admin'
+        TREASURER = "TREASURER", 'Treasurer'
+        ENFORCER = "ENFORCER", 'Enforcer'
+
+    base_role = Role.ADMIN
+
+    role = models.CharField(max_length=50, choices=Role.choices)
     
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.role = self.base_role
+            return super().save(*args, **kwargs)
