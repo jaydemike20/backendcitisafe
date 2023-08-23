@@ -5,9 +5,9 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions as django_exceptions
 from django.db import IntegrityError, transaction
-from accounts.models import UserProfile
 from rest_framework.exceptions import ValidationError
 from django.db import models
+from .models import UserProfile
 
 
 User = get_user_model()
@@ -15,13 +15,9 @@ User = get_user_model()
 
 # profile
 class UserProfileSerializer(serializers.ModelSerializer):
-    profilepic = serializers.ImageField(max_length=None, use_url=True)
-    birthdate = serializers.DateField(format='%d-%m-%Y')
-
     class Meta:
         model = UserProfile
-        fields = ['id', 'profilepic', 'birthdate', 'gender']
-        read_only_fields = ['id']
+        fields = "__all__"
 
     def create(self, validated_data):
         user = self.context['request'].user
@@ -33,7 +29,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     
     def update(self, instance, validated_data):
-        instance.profilepic = validated_data.get('profilepic', instance.profilepic)
+        instance.profilepic = validated_data.get('profile_picture', instance.profilepic)
         instance.birthdate = validated_data.get('birthdate', instance.birthdate)
         instance.gender = validated_data.get('gender', instance.gender)
         instance.save()

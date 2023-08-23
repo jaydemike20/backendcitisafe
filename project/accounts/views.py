@@ -9,6 +9,10 @@ from rest_framework import generics
 
 
 class ProfileListCreateAPIView(ListCreateAPIView):
+    # serializer_class = UserProfileSerializer
+    # queryset = UserProfile.objects.all()
+
+
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
 
@@ -20,6 +24,7 @@ class ProfileListCreateAPIView(ListCreateAPIView):
         queryset = UserProfile.objects.filter(user=user)
         return queryset
 
+
 class ProfileRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
@@ -28,3 +33,4 @@ class ProfileRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         user = self.request.user
         queryset = UserProfile.objects.filter(user=user)
         return queryset
+

@@ -45,10 +45,10 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework.authentication.TokenAuthentication',
 
-    ),
+    # ),
 }
 
 MIDDLEWARE = [
@@ -88,18 +88,18 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # connected to the postgreSQL
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-    "default": {
-    "ENGINE": "django.db.backends.postgresql",
-    "NAME": "backendcitisafe",
-    "USER": "postgres",
-    "PASSWORD": "@Jayde15",
-    "HOST": "localhost",  # Change this if your PostgreSQL server is on a different host
-    "PORT": "8080", 
-    },
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+    # "default": {
+    # "ENGINE": "django.db.backends.postgresql",
+    # "NAME": "backendcitisafe",
+    # "USER": "postgres",
+    # "PASSWORD": "@Jayde15",
+    # "HOST": "localhost",  # Change this if your PostgreSQL server is on a different host
+    # "PORT": "8080", 
+    # },
     
 }
 
