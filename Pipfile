@@ -9,6 +9,7 @@ psycopg2 = "*"
 djangorestframework = "*"
 djoser = "*"
 pillow = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 

@@ -15,25 +15,29 @@ User = get_user_model()
 
 # profile
 class UserProfileSerializer(serializers.ModelSerializer):
+    profile_picture = serializers.ImageField(max_length=None, use_url=True)
+    birthdate = serializers.DateField(format='%d-%m-%Y')
+
     class Meta:
         model = UserProfile
-        fields = "__all__"
+        fields = ['id', 'profile_picture', 'birthdate', 'gender']
+        read_only_fields = ['id']
 
     def create(self, validated_data):
         user = self.context['request'].user
         if UserProfile.objects.filter(user=user).exists():
             raise ValidationError("A profile already exists for this user.")
-        validated_data.pop('user', None)  # Remove the 'user' key from validated_data
-        UserProfile = UserProfile.objects.create(user=user, **validated_data)
-        return UserProfile
+        validated_data.pop('user', None)
+        profile = UserProfile.objects.create(user=user, **validated_data)
+        return profile
 
-    
     def update(self, instance, validated_data):
-        instance.profilepic = validated_data.get('profile_picture', instance.profilepic)
+        instance.profile_picture = validated_data.get('profile_picture', instance.profile_picture)  # Update field name
         instance.birthdate = validated_data.get('birthdate', instance.birthdate)
         instance.gender = validated_data.get('gender', instance.gender)
         instance.save()
         return instance
+
 
     
     
@@ -50,6 +54,9 @@ class CustomUserSerializer(UserSerializer):
             settings.LOGIN_FIELD,
             'first_name',
             'last_name',
+            'middle_name',
+            'role',
+            'position',
             'profile'
         )
         read_only_fields = (settings.LOGIN_FIELD,)
@@ -58,13 +65,9 @@ class CustomUserSerializer(UserSerializer):
 
 # registration
 class CustomUserCreateSerializer(UserCreateSerializer):
-    class Role(models.TextChoices):
-        ADMIN = "ADMIN", 'Admin'
-        TREASURER = "TREASURER", 'Treasurer'
-        ENFORCER = "ENFORCER", 'Enforcer'
 
-    role = models.CharField(max_length=50, choices=Role.choices, default=Role.ADMIN)
     middle_name = models.CharField(max_length=50, null=True, blank=True)
+    position = models.CharField(max_length=100, null=True, blank=True)
 
     first_name = serializers.CharField(max_length=255, write_only=True)
     last_name = serializers.CharField(max_length=255, write_only=True)
@@ -81,6 +84,7 @@ class CustomUserCreateSerializer(UserCreateSerializer):
             settings.USER_ID_FIELD,
             "password",
             "password2",
+            'position'
         )
 
     # added
@@ -95,6 +99,7 @@ class CustomUserCreateSerializer(UserCreateSerializer):
             'middle_name' : validated_data.get('middle_name', ''), 
             'last_name' : validated_data.get('last_name', ''),
             'role': validated_data.get('role', ''),
+            'position': validated_data.get('position', '')
         }
 
 

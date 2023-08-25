@@ -10,6 +10,7 @@ class User(AbstractUser):
 
     role = models.CharField(max_length=50, choices=Role.choices, default=Role.ADMIN)
     middle_name = models.CharField(max_length=50, null=True, blank=True)
+    position = models.CharField(max_length=100, null=True, blank=True)
 
 class EnforcerManager(BaseUserManager):
     def get_queryset(self, *args, **kwargs):
