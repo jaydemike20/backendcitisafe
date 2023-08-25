@@ -71,20 +71,18 @@ class CustomUserCreateSerializer(UserCreateSerializer):
 
     first_name = serializers.CharField(max_length=255, write_only=True)
     last_name = serializers.CharField(max_length=255, write_only=True)
-    password2 = serializers.CharField(max_length=255, write_only=True, style={'input_type': 'password'})
 
     class Meta:
         model = User
         fields = tuple(User.REQUIRED_FIELDS) + (
             "role",            
+            'position',
             "first_name",
             "middle_name",
             "last_name",
             settings.LOGIN_FIELD,
             settings.USER_ID_FIELD,
             "password",
-            "password2",
-            'position'
         )
 
     # added
@@ -107,7 +105,6 @@ class CustomUserCreateSerializer(UserCreateSerializer):
         user_data = self.clean_user_data(attrs)
         user = User(**user_data)
         password = user_data.get("password")
-        password2 = attrs.get("password2")
 
         try:
             validate_password(password, user)
@@ -116,11 +113,6 @@ class CustomUserCreateSerializer(UserCreateSerializer):
             raise serializers.ValidationError(
                 {"password": serializer_error["non_field_errors"]}
             )
-
-        if (password != password2):
-            raise serializers.ValidationError({"password2": "Passwords do not match"})
-
-
         return attrs
 
     def create(self, validated_data):
