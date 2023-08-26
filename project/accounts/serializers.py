@@ -130,8 +130,9 @@ class CustomUserCreateSerializer(UserCreateSerializer):
 
             user_data=self.clean_user_data(validated_data)
             user = User.objects.create_user(**user_data)
-            if settings.SEND_ACTIVATION_EMAIL:
-                user.is_active = False
+            if settings.SEND_CONFIRMATION_EMAIL:
+                user.is_active = True
                 user.save(update_fields=["is_active"])
+
         return user
     
