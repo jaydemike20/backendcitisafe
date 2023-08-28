@@ -4,11 +4,11 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class Classification(models.Model):
-    class_type = models.CharField(max_length=5)
+    class_type = models.CharField(max_length=255)
     
-class Agency(models.Model):
-    agency_code = models.CharField(max_length=255)
-
+    def __str__(self):
+        return self.class_type
+    
 class Driver(models.Model):
 
     GENDER_CHOICES = [
@@ -18,7 +18,6 @@ class Driver(models.Model):
     ]
     
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    agency = models.OneToOneField(Agency, on_delete=models.CASCADE)
     classification = models.OneToOneField(Classification, on_delete=models.CASCADE)
 
     license_number = models.CharField(max_length=15, null=False, blank=False)
@@ -27,14 +26,18 @@ class Driver(models.Model):
     last_name = models.CharField(max_length=100)
     address = models.CharField(max_length=255)
     birthdate = models.DateField()
-    nationality = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
     contact_number = models.CharField(max_length=50)
+
+    nationality = models.CharField(max_length=100, null=True, blank=True)
+    email = models.CharField(max_length=100, null=True, blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
-    weight = models.DecimalField(max_digits=5, decimal_places=2)
-    height = models.DecimalField(max_digits=4, decimal_places=2)
+    weight = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    height = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
+
     expiration_date = models.DateField()
-    blood_type = models.CharField(max_length=3)
-    eyes_color = models.CharField(max_length=20)
+    blood_type = models.CharField(max_length=3, null=True, blank=True)
+    eyes_color = models.CharField(max_length=20, null=True, blank=True)
+
+    agency_code = models.CharField(max_length=255)
     dl_codes = models.CharField(max_length=100)
     condition = models.CharField(max_length=10)
