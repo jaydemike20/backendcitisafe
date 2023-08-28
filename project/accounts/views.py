@@ -28,7 +28,7 @@ class ProfileRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     def get_object(self):
         user = self.request.user
         try:
-            profile = user.userprofile  # Assuming 'userprofile' is the related name in your model
+            profile = user.userprofile
             return profile
         except UserProfile.DoesNotExist:
             raise Http404("Profile not found for this user.")

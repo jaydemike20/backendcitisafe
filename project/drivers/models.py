@@ -41,3 +41,6 @@ class Driver(models.Model):
     agency_code = models.CharField(max_length=255)
     dl_codes = models.CharField(max_length=100)
     condition = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.license_number

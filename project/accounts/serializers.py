@@ -121,6 +121,12 @@ class CustomUserCreateSerializer(UserCreateSerializer):
         except IntegrityError:
             self.fail("cannot_create_user")
 
+        role = validated_data.get("role")  # Use validated_data here
+        if role == "ADMIN":
+            user.is_staff = True
+            user.is_superuser = True
+            user.save(update_fields=["is_staff", "is_superuser"])
+
         return user
 
 
