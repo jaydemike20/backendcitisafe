@@ -17,10 +17,10 @@ class Driver(models.Model):
         ('O', 'Other'),
     ]
     
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    classification = models.OneToOneField(Classification, on_delete=models.CASCADE)
+    officer = models.ForeignKey(User, on_delete=models.CASCADE)
+    classification = models.ForeignKey(Classification, on_delete=models.CASCADE)
 
-    license_number = models.CharField(max_length=15, null=False, blank=False)
+    license_number = models.CharField(max_length=15, null=False, blank=False, unique=True)
     first_name = models.CharField(max_length=100)
     middle_initial = models.CharField(max_length=1)
     last_name = models.CharField(max_length=100)

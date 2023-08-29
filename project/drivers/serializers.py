@@ -5,15 +5,12 @@ class ClassificationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Classification
-        fields = '__all__'
+        fields = '__all__' 
 
 
 class DriverSerializer(serializers.ModelSerializer):
-    
-    classification_type = Classification()
-
+        
     class Meta:
         model = Driver
         fields = '__all__'
-
-    
+        read_only_fields = ('officer',)  # It should be a tuple

@@ -22,8 +22,16 @@ class ClassificationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 class DriverListCreateAPIView(ListCreateAPIView):
     serializer_class = DriverSerializer
     queryset = Driver.objects.all()
-    # permission_classes = [IsAuthenticated & (EnforcerPermission)]
+    permission_classes = [IsAuthenticated & (EnforcerPermission)]
 
+
+    # def get_queryset(self):
+    #     # Return only the drivers associated with the authenticated user
+    #     return Driver.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        # Set the user as the authenticated user when creating a driver instance
+        serializer.save(user=self.request.user)
 
 
 class DriverRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
