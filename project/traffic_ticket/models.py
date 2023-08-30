@@ -7,7 +7,6 @@ User = get_user_model()
 
 # Create your models here.
 class penalty(models.Model):
-
     description = models.CharField(max_length=255)
     amount = models.DecimalField(max_digits=9, decimal_places=2)
 
@@ -23,7 +22,6 @@ class penalty(models.Model):
     
 
 class violation(models.Model):
-
     penalty_ID = models.ForeignKey(penalty, on_delete=models.CASCADE)
     violation_type = models.CharField(max_length=255)
 
@@ -33,6 +31,9 @@ class violation(models.Model):
 class traffic_violation(models.Model):
 
     violation_id = models.ManyToManyField(violation)
+
+    def __str__(self):
+        return str(self.id) 
     
 
 class ticket(models.Model):
@@ -51,6 +52,8 @@ class ticket(models.Model):
     place_violation = models.CharField(max_length=255)
     date_issued = models.DateTimeField(auto_now_add=True, auto_now=False)
     signature = models.ImageField(upload_to="signature/", null=True, blank=True)
+    # Link the ticket's driver to the vehicle
+    vehicle = models.ForeignKey('vehicles.vehicle', on_delete=models.CASCADE, related_name='driver_tickets', blank=True, null=True)
 
     # custom primarykey
 
