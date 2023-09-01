@@ -9,16 +9,18 @@ from accounts.permissions import EnforcerPermission, AdminPermission
 
 # Create your views here.
 
+# accessible only by admin
 class ClassificationListCreateAPIView(ListCreateAPIView):
     serializer_class = ClassificationSerializer
     queryset = Classification.objects.all()
-    # permission_classes = [AdminPermission]
+    permission_classes = [AdminPermission]
 
 class ClassificationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = ClassificationSerializer
     queryset = Classification.objects.all()
     permission_classes = [AdminPermission]
 
+# accessible only by administrator
 class DriverListCreateAPIView(ListCreateAPIView):
     serializer_class = DriverSerializer
     # queryset = Driver.objects.all()
