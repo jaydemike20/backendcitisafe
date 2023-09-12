@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'rest_framework.authtoken',
+    "corsheaders",    
     "accounts",
     "drivers",
     "vehicles",
@@ -62,6 +63,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -158,6 +161,9 @@ EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
 EMAIL_HOST_USER = '061df45eb6ebea'
 EMAIL_HOST_PASSWORD = '98494b8a33eec4'
 EMAIL_PORT = '2525'
+
+FRONTEND_URL = 'http://localhost:3000'
+
 
 # my djoser
 DJOSER = {
