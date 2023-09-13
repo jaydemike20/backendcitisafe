@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from vehicles.models import vehicle, vehicle_type
-from vehicles.serializers import VehicleSerializers, VehicleTypeSerializers
+from vehicles.models import vehicle, vehicle_type, registered_owner
+from vehicles.serializers import VehicleSerializers, VehicleTypeSerializers, OwnerSerializers
 from rest_framework.permissions import IsAuthenticated
 from accounts.permissions import EnforcerPermission, AdminPermission
 
@@ -12,12 +12,22 @@ from accounts.permissions import EnforcerPermission, AdminPermission
 class VehicleTypeListCreateAPIView(ListCreateAPIView):
     serializer_class = VehicleTypeSerializers
     queryset = vehicle_type.objects.all()
-    permission_classes = [IsAuthenticated & (AdminPermission)]
+    # permission_classes = [IsAuthenticated & (AdminPermission)]
 
 class VehicleTypeRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = VehicleTypeSerializers
     queryset = vehicle_type.objects.all()
-    permission_classes = [IsAuthenticated & (AdminPermission)]
+    # permission_classes = [IsAuthenticated & (AdminPermission)]
+
+class OwnerListCreateAPIView(ListCreateAPIView):
+    serializer_class = OwnerSerializers
+    queryset = registered_owner.objects.all()
+    # permission_classes = [IsAuthenticated & (EnforcerPermission)]
+
+class OwnerRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = OwnerSerializers
+    queryset = registered_owner.objects.all()
+    # permission_classes = [IsAuthenticated & (EnforcerPermission)]
 
 
 class VehicleListCreateAPIView(ListCreateAPIView):

@@ -46,3 +46,8 @@ class Driver(models.Model):
 
     def __str__(self):
         return self.license_number
+    
+       # Method to calculate the offense count for the driver
+    def offense_count(self):
+        from traffic_ticket.models import ticket  # Replace 'your_app_name' with the actual name of your app
+        return ticket.objects.filter(driver_ID=self, ticket_status='PAID').count()
