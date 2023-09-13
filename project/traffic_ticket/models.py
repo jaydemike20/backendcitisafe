@@ -40,6 +40,7 @@ class ticket(models.Model):
 
     driver_ID = models.ForeignKey(Driver, on_delete=models.CASCADE)
     user_ID = models.ForeignKey(User, on_delete=models.CASCADE)
+    violations = models.ForeignKey(traffic_violation, on_delete=models.CASCADE)
 
     TICKET_STATUS_CHOICES = [
         ("PENDING", "Pending"),

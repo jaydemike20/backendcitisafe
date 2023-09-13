@@ -18,7 +18,6 @@ class TrafficViolationSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 class TicketSerializers(serializers.ModelSerializer):
-    traffic_violation = TrafficViolationSerializers(many=True)  # Add this line
 
     class Meta:
         model = ticket
