@@ -7,7 +7,7 @@ urlpatterns = [
     path('', include('djoser.urls')),
     path('', include('djoser.urls.authtoken')),
     path('profile/', ProfileListCreateAPIView.as_view(), name="profile-list" ),
-    path('profile/me/', ProfileRetrieveUpdateDestroyAPIView.as_view(), name="profile-details" )
+    path('profile/me/', ProfileRetrieveUpdateDestroyAPIView.as_view(), name="profile-details" ),
 ]
 
 

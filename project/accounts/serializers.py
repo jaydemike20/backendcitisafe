@@ -61,7 +61,7 @@ class CustomUserSerializer(UserSerializer):
             'profile'
         )
         read_only_fields = (settings.LOGIN_FIELD,)
-
+        depth = 1
 
 
 # registration
