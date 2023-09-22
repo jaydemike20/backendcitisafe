@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     "accounts",
     "drivers",
     "vehicles",
-    "corsheaders"
+    "corsheaders",
+    "ticket"
 ]
 
 REST_FRAMEWORK = {
