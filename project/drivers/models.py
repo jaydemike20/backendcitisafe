@@ -28,18 +28,17 @@ class Driver(models.Model):
 
     address = models.CharField(max_length=255)
     birthdate = models.DateField()
-    contact_number = models.CharField(max_length=50)
 
     nationality = models.CharField(max_length=100, null=True, blank=True)
     
-    email = models.CharField(max_length=100, null=True, blank=True)
+    # email = models.CharField(max_length=100, null=True, blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
     weight = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     height = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
 
     expiration_date = models.DateField()
     blood_type = models.CharField(max_length=3, null=True, blank=True)
-    eyes_color = models.CharField(max_length=20, null=True, blank=True)
+    # eyes_color = models.CharField(max_length=20, null=True, blank=True)
     agency_code = models.CharField(max_length=255)
     dl_codes = models.CharField(max_length=100)
     condition = models.CharField(max_length=10)

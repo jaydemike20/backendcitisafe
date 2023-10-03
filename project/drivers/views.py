@@ -12,7 +12,7 @@ from accounts.permissions import EnforcerPermission, AdminPermission
 class ClassificationListCreateAPIView(ListCreateAPIView):
     serializer_class = ClassificationSerializer
     queryset = Classification.objects.all()
-    permission_classes = [AdminPermission]
+    # permission_classes = [AdminPermission]
 
 class ClassificationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = ClassificationSerializer
@@ -31,7 +31,7 @@ class DriverListCreateAPIView(ListCreateAPIView):
 
     def perform_create(self, serializer):
         # Set the user as the authenticated user when creating a driver instance
-        serializer.save(user=self.request.user)
+        serializer.save(officer=self.request.user)
 
 
 class DriverRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):

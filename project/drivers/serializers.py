@@ -11,7 +11,7 @@ class ClassificationSerializer(serializers.ModelSerializer):
 
 class DriverSerializer(serializers.ModelSerializer):
     officer = CustomUserSerializer(read_only=True)
-    classification = serializers.SerializerMethodField()
+    # classification = serializers.SerializerMethodField()
 
     class Meta:
         model = Driver

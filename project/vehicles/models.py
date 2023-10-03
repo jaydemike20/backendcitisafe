@@ -24,9 +24,7 @@ class vehicle_type(models.Model):
     
 # enforcer
 class registered_owner(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    middle_initial = models.CharField(max_length=1)    
+    name = models.CharField(max_length=100)  
     address = models.CharField(max_length=255)
     contact_number = models.CharField(max_length=50, null=True)
 
@@ -38,7 +36,7 @@ class vehicle(models.Model):
     officer = models.ForeignKey(User, on_delete=models.CASCADE)
     # foreign keys
     driverID = models.ForeignKey(Driver, on_delete=models.CASCADE)
-    vehicle_type_ID = models.ForeignKey(vehicle_type, on_delete=models.CASCADE)
+    # vehicle_type_ID = models.ForeignKey(vehicle_type, on_delete=models.CASCADE)
     owner_ID = models.ForeignKey(registered_owner, on_delete=models.CASCADE)
 
     # other fields
@@ -47,6 +45,7 @@ class vehicle(models.Model):
     color = models.CharField(max_length=50)
     vehicle_class = models.CharField(max_length=255)
     body_markings = models.CharField(max_length=100)
+    vehicle_model = models.CharField(max_length=255)
 
     def __str__(self):
         return self.plate_number
