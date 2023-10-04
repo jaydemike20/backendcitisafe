@@ -40,7 +40,7 @@ class vehicle(models.Model):
     owner_ID = models.ForeignKey(registered_owner, on_delete=models.CASCADE)
 
     # other fields
-    plate_number = models.CharField(max_length=50, unique=True)
+    plate_number = models.CharField(max_length=50)
     make = models.CharField(max_length=255)
     color = models.CharField(max_length=50)
     vehicle_class = models.CharField(max_length=255)
