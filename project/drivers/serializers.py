@@ -34,3 +34,4 @@ class DriverSerializer(serializers.ModelSerializer):
         model = Driver
         fields = '__all__'
         read_only_fields = ('officer',)  # It should be a tuple
+
