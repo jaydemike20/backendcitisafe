@@ -14,13 +14,11 @@ class ClassificationSerializer(serializers.ModelSerializer):
 class DriverSerializer(serializers.ModelSerializer):
     officer = CustomUserSerializer(read_only=True)
     birthdate = serializers.DateField(format='%Y/%m/%d')
-    expiration_date = serializers.DateField(format='%Y/%m/%d')
 
 
     def to_internal_value(self, data):
         # Convert the input date formats to the internal format ('YYYY-MM-DD')
         data['birthdate'] = datetime.strptime(data['birthdate'], '%Y/%m/%d').date()
-        data['expiration_date'] = datetime.strptime(data['expiration_date'], '%Y/%m/%d').date()
         return super().to_internal_value(data)
 
     def validate_birthdate(self, value):
