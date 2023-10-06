@@ -36,16 +36,19 @@ class vehicle(models.Model):
     officer = models.ForeignKey(User, on_delete=models.CASCADE)
     # foreign keys
     driverID = models.ForeignKey(Driver, on_delete=models.CASCADE)
-    # vehicle_type_ID = models.ForeignKey(vehicle_type, on_delete=models.CASCADE)
-    owner_ID = models.ForeignKey(registered_owner, on_delete=models.CASCADE)
 
     # other fields
+
+    name = models.CharField(max_length=100)  
+    address = models.CharField(max_length=255)
+    contact_number = models.CharField(max_length=50, null=True, blank=True)    
     plate_number = models.CharField(max_length=50)
     make = models.CharField(max_length=255, null=True, blank=True)
     color = models.CharField(max_length=50, null=True, blank=True)
     vehicle_class = models.CharField(max_length=255, null=True, blank=True)
     body_markings = models.CharField(max_length=100, null=True, blank=True)
     vehicle_model = models.CharField(max_length=255, null=True, blank=True)
+    date_issued = models.DateTimeField(auto_created=True, auto_now=True)
 
     def __str__(self):
         return self.plate_number

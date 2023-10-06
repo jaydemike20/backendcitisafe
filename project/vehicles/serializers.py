@@ -21,7 +21,7 @@ class VehicleSerializers(serializers.ModelSerializer):
     # vehicle_type_ID = VehicleTypeSerializers()
     # owner_ID = RegisteredOwnerSerializers()
     officer = CustomUserSerializer(read_only=True)
-    owner_ID = RegisteredOwnerSerializers()
+
 
     class Meta:
         model = vehicle

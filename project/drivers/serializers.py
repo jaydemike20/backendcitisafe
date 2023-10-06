@@ -10,11 +10,11 @@ class ClassificationSerializer(serializers.ModelSerializer):
         fields = '__all__' 
 
 
+
 class DriverSerializer(serializers.ModelSerializer):
     officer = CustomUserSerializer(read_only=True)
     birthdate = serializers.DateField(format='%Y/%m/%d')
     expiration_date = serializers.DateField(format='%Y/%m/%d')
-    # classification = serializers.SerializerMethodField()
 
 
     def to_internal_value(self, data):
@@ -36,19 +36,3 @@ class DriverSerializer(serializers.ModelSerializer):
         model = Driver
         fields = '__all__'
         read_only_fields = ('officer',)  # It should be a tuple
-
-    def get_classification(self, obj):
-        classification = obj.classification  # Get the related Classification object
-        if classification:
-            # Serialize the Classification object using the ClassificationSerializer
-            classification_data = ClassificationSerializer(classification).data
-            return classification_data
-        return None  # Return None if there is no related Classification
-
-    def to_representation(self, instance):
-        # Override to_representation to include classification like officer
-        representation = super().to_representation(instance)
-        classification_data = representation.pop('classification', None)
-        if classification_data:
-            representation['classification'] = classification_data
-        return representation

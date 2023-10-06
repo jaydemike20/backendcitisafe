@@ -6,8 +6,6 @@ User = get_user_model()
 class Classification(models.Model):
     class_type = models.CharField(max_length=255)
     
-    def __str__(self):
-        return self.class_type
     
 class Driver(models.Model):
 
