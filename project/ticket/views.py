@@ -35,6 +35,8 @@ class ticketListCreateAPIView(ListCreateAPIView):
     serializer_class = ticketSerializer
     queryset = ticket.objects.all()
 
+
+
     def perform_create(self, serializer):
         # Set the user as the authenticated user when creating a driver instance
         serializer.save(user_ID=self.request.user)

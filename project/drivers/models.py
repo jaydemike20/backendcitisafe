@@ -36,5 +36,10 @@ class Driver(models.Model):
     def save(self, *args, **kwargs):
         if self.license_number is None:
             self.license_number = 'No License'
-        super().save(*args, **kwargs)        
+            
+        if self.license_number is not None:
+            if self.classification is None:
+                raise ValueError("Classification cannot be null when license_number is not null.")
+
+        super().save(*args, **kwargs)
     

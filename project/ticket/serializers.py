@@ -8,8 +8,7 @@ class penaltySerializers(serializers.ModelSerializer):
         fields = "__all__"
 
 class violationSerializer(serializers.ModelSerializer):
-    penalty_ID = penaltySerializers(read_only=True)
-    penalty = serializers.IntegerField(write_only=True)
+    penalty_info = penaltySerializers(source='penalty_ID', read_only=True)
 
     class Meta:
         model = violation

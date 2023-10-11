@@ -73,3 +73,6 @@ class ticket(models.Model):
 
     def __str__(self):
         return self.MFRTA_TCT_NO
+    
+    def formatted_date_issued(self):
+        return self.date_issued.strftime('%Y-%m-%d %H:%M:%S')
