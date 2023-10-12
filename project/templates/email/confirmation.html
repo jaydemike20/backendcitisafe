@@ -5,17 +5,25 @@
 {% endblock %}
 
 {% block text_body %}
-{% trans "Welcome back GEMS!! Your account has been created and is ready to use!" %}
+{% trans "Welcome GEMS! Your account has been created and is ready to use!" %}
 
 {% trans "Thanks for using our site!" %}
 
 {% blocktrans %}The {{ site_name }} team{% endblocktrans %}
+
+{% trans "Username: " %} {{ user.username }}
+{% trans "Temporary Password: " %} 2023@lastname
+{% trans "Please change your password upon first login." %}
 {% endblock text_body %}
 
 {% block html_body %}
-<p>{% trans "Welcome back GEMS!! Your account has been created and is ready to use!"%}</p>
+<p>{% trans "Welcome GEMS! Your account has been created and is ready to use!"%}</p>
 
-<p>{% trans "Thanks for using our site!" %} {{user.position}}</p>
+<p>{% trans "Thanks for using our site!" %} {{ user.position }}</p>
 
 <p>{% blocktrans %}The {{ site_name }} team{% endblocktrans %}</p>
+
+<p>{% trans "Username: " %} {{ user.username }}</p>
+<p>{% trans "Temporary Password: " %} 2023@lastname</p>
+<p>{% trans "Please change your password upon first login." %}</p>
 {% endblock html_body %}

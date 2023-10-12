@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     "drivers",
     "vehicles",
     "corsheaders",
-    "ticket"
+    "ticket",
 ]
 
 REST_FRAMEWORK = {
@@ -157,11 +157,21 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 
 # mailtrap config
-EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = '061df45eb6ebea'
-EMAIL_HOST_PASSWORD = '98494b8a33eec4'
-EMAIL_PORT = '2525'
+# EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+# EMAIL_HOST_USER = '061df45eb6ebea'
+# EMAIL_HOST_PASSWORD = '98494b8a33eec4'
+# EMAIL_PORT = '2525'
 
+# GMAIL
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True  
+EMAIL_HOST_USER = 'jaydemike21@gmail.com'
+EMAIL_HOST_PASSWORD = 'epvcwqrbtxtzpgcp'
+
+
+DEFAULT_FROM_EMAIL = 'jaydemike21@gmail.com'
 # my djoser
 DJOSER = {
     "SEND_CONFIRMATION_EMAIL": True,
@@ -173,6 +183,7 @@ DJOSER = {
     'EMAIL' : {
         'confirmation': 'accounts.email.ConfirmationEmail',
     },    
+    'DEFAULT_FROM_EMAIL': 'jaydemike21@gmail.com', 
 }
 
 
