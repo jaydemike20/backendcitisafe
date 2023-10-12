@@ -36,6 +36,9 @@ class ticketListCreateAPIView(ListCreateAPIView):
     queryset = ticket.objects.all()
 
 
+    # def get_queryset(self):
+    #     # Filter traffic tickets based on the logged-in officer
+    #     return ticket.objects.filter(user_ID=self.request.user)
 
     def perform_create(self, serializer):
         # Set the user as the authenticated user when creating a driver instance
