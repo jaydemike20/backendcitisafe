@@ -170,18 +170,24 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'jaydemike21@gmail.com'
 EMAIL_HOST_PASSWORD = 'epvcwqrbtxtzpgcp'
 
+# frond end
+FRONTEND_URL = 'http://localhost:3000'
 
 DEFAULT_FROM_EMAIL = 'jaydemike21@gmail.com'
 # my djoser
 DJOSER = {
     "SEND_CONFIRMATION_EMAIL": True,
     'LOGIN_FIELD': 'username',
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    "PASSWORD_RESET_CONFIRM_URL": 'reset_password/{uid}/{token}',
     'SERIALIZERS': {
         'user_create': 'accounts.serializers.CustomUserCreateSerializer',
         'current_user': 'accounts.serializers.CustomUserSerializer',
     },
     'EMAIL' : {
         'confirmation': 'accounts.email.ConfirmationEmail',
+        'password_reset': 'accounts.email.CustomPasswordResetEmail',
+        'password_changed_confirmation': 'accounts.email.PasswordChangedConfirmationEmail'        
     },    
     'DEFAULT_FROM_EMAIL': 'jaydemike21@gmail.com', 
 }
