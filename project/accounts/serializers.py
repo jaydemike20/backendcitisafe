@@ -65,7 +65,8 @@ class CustomUserSerializer(UserSerializer):
             'middle_name',
             'role',
             'position',
-            'profile'
+            'profile',
+            'profile_picture'
         )
         read_only_fields = (settings.LOGIN_FIELD,)
 
@@ -77,6 +78,7 @@ class CustomUserCreateSerializer(UserCreateSerializer):
     first_name = serializers.CharField(max_length=255, write_only=True)
     last_name = serializers.CharField(max_length=255, write_only=True)
     email = serializers.EmailField(validators=[UniqueValidator(queryset=User.objects.all())])
+    profile_picture = serializers.ImageField(max_length=None, use_url=True, required=False)  # Make it not required
 
     class Meta:
         model = User
@@ -88,7 +90,9 @@ class CustomUserCreateSerializer(UserCreateSerializer):
             "last_name",
             settings.LOGIN_FIELD,
             settings.USER_ID_FIELD,
-            'email'
+            'email',
+            'profile_picture',  # Include profile_picture here
+ 
         )
 
     def clean_user_data(self, validated_data):
@@ -99,7 +103,7 @@ class CustomUserCreateSerializer(UserCreateSerializer):
             'middle_name' : validated_data.get('middle_name', ''), 
             'last_name' : validated_data.get('last_name', ''),
             'role': validated_data.get('role', ''),
-            'position': validated_data.get('position', '')
+            'position': validated_data.get('position', ''),
         }
 
 

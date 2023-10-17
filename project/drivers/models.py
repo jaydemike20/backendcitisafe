@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.forms import ValidationError
 
 User = get_user_model()
 
@@ -41,5 +42,9 @@ class Driver(models.Model):
             if self.classification is None:
                 raise ValueError("Classification cannot be null when license_number is not null.")
 
+            # Check for uniqueness of license_number
+            if Driver.objects.filter(license_number=self.license_number).exclude(id=self.id).exists():
+                raise ValidationError("License number must be unique.")
+                
         super().save(*args, **kwargs)
     

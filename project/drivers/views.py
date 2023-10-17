@@ -43,5 +43,5 @@ class DriverListCreateAPIView(ListCreateAPIView):
 class DriverRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = DriverSerializer
     queryset = Driver.objects.all()    
-    permission_classes = [IsAuthenticated & (AdminPermission | EnforcerPermission)]
+    # permission_classes = [IsAuthenticated & (AdminPermission | EnforcerPermission)]
     

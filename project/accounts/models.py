@@ -2,6 +2,11 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
 # models for accounts
+# table for profile of rta officer
+def profile_pic_upload_path(instance, filename):
+    # Construct the upload path dynamically
+    return f"profile_pics/{filename}".format(filename=filename)    
+
 class User(AbstractUser):
     class Role(models.TextChoices):
         ADMIN = "ADMIN", 'Admin'
@@ -11,6 +16,7 @@ class User(AbstractUser):
     role = models.CharField(max_length=50, choices=Role.choices, default=Role.ADMIN)
     middle_name = models.CharField(max_length=50, null=True, blank=True)
     position = models.CharField(max_length=100, null=True, blank=True)
+    profile_picture = models.ImageField(default='profile_pics/image.png' , upload_to='profile_pics/', null=True, blank=True)
 
 class EnforcerManager(BaseUserManager):
     def get_queryset(self, *args, **kwargs):
