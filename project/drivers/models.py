@@ -18,9 +18,16 @@ class Driver(models.Model):
         ('F', 'Female'),
         ('O', 'Other'),
     ]
+
+    CLASSIFICATION_CHOICES = [
+        ('P', 'Professional'),
+        ('NP', 'Non-Professional'),
+        ('SP', 'Student-Permit'),
+        ('O', 'Other')
+    ]
     
     officer = models.ForeignKey(User, on_delete=models.CASCADE)
-    classification = models.ForeignKey(Classification, on_delete=models.CASCADE, null=True, blank=True)
+    classification = models.CharField(max_length=2, choices=CLASSIFICATION_CHOICES, null=True, blank=True)
     license_number = models.CharField(max_length=15, null=True, blank=True)
     # full name
     first_name = models.CharField(max_length=100)
@@ -47,4 +54,15 @@ class Driver(models.Model):
                 raise ValidationError("License number must be unique.")
                 
         super().save(*args, **kwargs)
+
+
+    def calculate_penalty_amount(self):
+        total_penalty_amount = 0
+
+        # Iterate over each violation associated with the ticket
+        for violation in self.violations.violation_id.all():
+            # Add the penalty amount for each violation
+            total_penalty_amount += violation.penalty_ID.amount
+
+        return total_penalty_amount        
     

@@ -20,39 +20,6 @@ class violationSerializer(serializers.ModelSerializer):
 
 
     
-    
-# class traffic_violationSerializer(serializers.ModelSerializer):
-
-#     violations_info = violationSerializer(many=True, read_only=True)
-
-
-#     class Meta:
-#         model = traffic_violation
-#         fields = "__all__"
-
-# class ticketSerializer(serializers.ModelSerializer):
-#     user_ID = CustomUserSerializer(read_only=True)
-#     driver_info = DriverSerializer(source='driver_ID', read_only=True)
-#     violation_info = traffic_violationSerializer(source='violations', read_only=True)
-#     vehicle_info = VehicleSerializers(source='vehicle', read_only=True)
-
-#     date_issued = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S')
-
-
-#     def to_internal_value(self, data):
-#         # Convert the input date formats to the internal format ('YYYY-MM-DD')
-#         data['date_issued'] = datetime.strptime(data['date_issued'], '%Y-%m-%d %H:%M:%S').date()
-#         return super().to_internal_value(data)
-
-#     def validate_dateissued(self, value):
-#         # Validation logic for birthdate
-#         return value
-    
-         
-#     class Meta:
-#         model = ticket
-#         fields = "__all__"
-#         read_only_fields = ('user_ID',)
 class traffic_violationSerializer(serializers.ModelSerializer):
     violations_info = serializers.SerializerMethodField()
 
@@ -69,9 +36,15 @@ class ticketSerializer(serializers.ModelSerializer):
     driver_info = DriverSerializer(source='driver_ID', read_only=True)
     violation_info = traffic_violationSerializer(source='violations', read_only=True)
     vehicle_info = VehicleSerializers(source='vehicle', read_only=True)
- 
 
+    penalty_amount = serializers.SerializerMethodField()
+
+    def get_penalty_amount(self, obj):
+        return ticket.calculate_penalty_amount(obj.violations)
+
+        
     class Meta:
         model = ticket
         fields = "__all__"
         read_only_fields = ('user_ID',)
+

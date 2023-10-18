@@ -73,3 +73,14 @@ class ticket(models.Model):
 
     def __str__(self):
         return self.MFRTA_TCT_NO
+
+    @staticmethod
+    def calculate_penalty_amount(violations):
+        total_penalty_amount = 0
+
+        # Iterate over each violation associated with the ticket
+        for violation in violations.violation_id.all():
+            # Add the penalty amount for each violation
+            total_penalty_amount += violation.penalty_ID.amount
+
+        return total_penalty_amount
