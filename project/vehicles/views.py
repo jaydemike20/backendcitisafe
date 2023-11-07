@@ -12,12 +12,12 @@ from accounts.permissions import EnforcerPermission, AdminPermission
 class VehicleTypeListCreateAPIView(ListCreateAPIView):
     serializer_class = VehicleTypeSerializers
     queryset = vehicle_type.objects.all()
-    # permission_classes = [IsAuthenticated & (AdminPermission)]
+    permission_classes = [IsAuthenticated & (AdminPermission)]
 
 class VehicleTypeRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = VehicleTypeSerializers
     queryset = vehicle_type.objects.all()
-    # permission_classes = [IsAuthenticated & (AdminPermission)]
+    permission_classes = [IsAuthenticated & (AdminPermission)]
 
 
 # access only by enforcer
@@ -34,7 +34,7 @@ class RegisteredOwnerRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 class VehicleListCreateAPIView(ListCreateAPIView):
     serializer_class = VehicleSerializers
     queryset = vehicle.objects.all()
-    # permission_classes = [IsAuthenticated & (EnforcerPermission | AdminPermission)]
+    permission_classes = [IsAuthenticated & (EnforcerPermission | AdminPermission)]
 
     def perform_create(self, serializer):
         # Set the user as the authenticated user when creating a driver instance
@@ -43,4 +43,4 @@ class VehicleListCreateAPIView(ListCreateAPIView):
 class VehicleRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = VehicleSerializers
     queryset = vehicle.objects.all()
-    # permission_classes = [IsAuthenticated & (EnforcerPermission & AdminPermission)]
+    permission_classes = [IsAuthenticated & (EnforcerPermission & AdminPermission)]

@@ -6,6 +6,7 @@ User = get_user_model()
 
 # Create your models here.
 
+# not included
 # admin
 class vehicle_type(models.Model):
     model = models.CharField(max_length=255, null=True, blank=True)
@@ -31,6 +32,8 @@ class registered_owner(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.middle_initial}. {self.last_name}" 
     
+
+# active
 class vehicle(models.Model):
 
     officer = models.ForeignKey(User, on_delete=models.CASCADE)

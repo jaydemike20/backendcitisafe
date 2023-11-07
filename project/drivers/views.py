@@ -23,7 +23,7 @@ class ClassificationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 class DriverListCreateAPIView(ListCreateAPIView):
     serializer_class = DriverSerializer
     queryset = Driver.objects.all()
-    # permission_classes = [IsAuthenticated & (EnforcerPermission)]
+    permission_classes = [IsAuthenticated & (EnforcerPermission)]
 
 
     # def get_queryset(self):
@@ -43,5 +43,5 @@ class DriverListCreateAPIView(ListCreateAPIView):
 class DriverRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = DriverSerializer
     queryset = Driver.objects.all()    
-    # permission_classes = [IsAuthenticated & (AdminPermission | EnforcerPermission)]
+    permission_classes = [IsAuthenticated & (AdminPermission | EnforcerPermission)]
     
