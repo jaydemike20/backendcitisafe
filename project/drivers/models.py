@@ -36,6 +36,7 @@ class Driver(models.Model):
     address = models.CharField(max_length=255)
     birthdate = models.DateField()
     nationality = models.CharField(max_length=100)
+    offenses_count = models.IntegerField(default=0)
 
 
     def __str__(self):
