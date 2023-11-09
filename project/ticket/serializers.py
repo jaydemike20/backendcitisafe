@@ -37,7 +37,7 @@ class ticketSerializer(serializers.ModelSerializer):
     violation_info = traffic_violationSerializer(source='violations', read_only=True)
     vehicle_info = VehicleSerializers(source='vehicle', read_only=True)
 
-    formatted_date_issued = serializers.DateTimeField(format="%m/%d/%Y %H:%M:%S")
+    date_issued = serializers.DateTimeField(format="%m/%d/%Y %H:%M:%S", read_only=True)
     penalty_amount = serializers.SerializerMethodField()
 
     def get_penalty_amount(self, obj):
