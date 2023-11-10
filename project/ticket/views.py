@@ -5,6 +5,18 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from accounts.permissions import EnforcerPermission, AdminPermission, TreasurerPermission
 from rest_framework.permissions import IsAuthenticated
 
+from django.http import JsonResponse
+from django.views import View
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+
+@method_decorator(csrf_exempt, name='dispatch')
+class GetTicketsByMonthView(View):
+    def get(self, request, *args, **kwargs):
+        user_id = self.request.GET.get('user_id')
+        result = ticket.get_tickets_by_month(user_id)
+        return JsonResponse(result, safe=False)
+
 # Create your views here.
 
 class penaltyListCreateAPIView(ListCreateAPIView):

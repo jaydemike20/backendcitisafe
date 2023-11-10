@@ -2,6 +2,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from ticket.views import penaltyListCreateAPIView, penaltyRetrieveUpdateDestroyAPIView, violationListCreateAPIView, violationRetrieveUpdateDestroyAPIView, trafficviolationListCreateAPIView, trafficviolationRetrieveUpdateDestroyAPIView, ticketListCreateAPIView, ticketRetrieveUpdateDestroyAPIView
+from ticket.views import GetTicketsByMonthView
 
 urlpatterns = [
     path('register/', ticketListCreateAPIView.as_view(), name="ticket-list" ),
@@ -11,5 +12,7 @@ urlpatterns = [
     path('violation/', violationListCreateAPIView.as_view(), name="violation-list" ),
     path('violation/<int:pk>/', violationRetrieveUpdateDestroyAPIView.as_view(), name="violation-details" ),
     path('trafficviolation/', trafficviolationListCreateAPIView.as_view(), name="trafficviolation-list" ),
-    path('trafficviolation/<int:pk>/', trafficviolationRetrieveUpdateDestroyAPIView.as_view(), name="trafficviolation-details" ),         
+    path('trafficviolation/<int:pk>/', trafficviolationRetrieveUpdateDestroyAPIView.as_view(), name="trafficviolation-details" ),  
+    path('get_tickets_by_month/', GetTicketsByMonthView.as_view(), name='get_tickets_by_month'),
+
 ]

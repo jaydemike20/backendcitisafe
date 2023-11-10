@@ -51,22 +51,18 @@ class UserProfileSerializer(serializers.ModelSerializer):
 # login 
 class CustomUserSerializer(UserSerializer):
 
-    profile = UserProfileSerializer(read_only=True)
-
-
     class Meta:
         model = User
         fields = tuple(User.REQUIRED_FIELDS) + (
             settings.USER_ID_FIELD,
             settings.LOGIN_FIELD,
-            'id',
             'first_name',
             'last_name',
             'middle_name',
             'role',
             'position',
-            'profile',
-            'profile_picture'
+            'profile_picture',  
+            'is_active'
         )
         read_only_fields = (settings.LOGIN_FIELD,)
 

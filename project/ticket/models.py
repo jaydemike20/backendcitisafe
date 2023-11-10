@@ -2,6 +2,7 @@ from django.db import models
 from drivers.models import Driver
 from django.contrib.auth import get_user_model
 import datetime
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -45,6 +46,7 @@ class ticket(models.Model):
     TICKET_STATUS_CHOICES = [
         ("PENDING", "Pending"),
         ("PAID", "Paid"),
+        ("OVERDUE", "Overdue"),
         ("DISMISSED", "Dismissed"),
     ]
     ticket_status = models.CharField(max_length=10, choices=TICKET_STATUS_CHOICES, default="Pending")
@@ -84,9 +86,11 @@ class ticket(models.Model):
             total_penalty_amount += violation.penalty_ID.amount
 
         return total_penalty_amount
+        
     
     def save(self, *args, **kwargs):
         # Increment the offenses_count for the driver associated with this ticket
         self.driver_ID.offenses_count += 1
-        self.driver_ID.save()
+        self.driver_ID.save()      
+
         super().save(*args, **kwargs)
