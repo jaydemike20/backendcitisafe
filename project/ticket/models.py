@@ -98,17 +98,17 @@ class ticket(models.Model):
         super().save(*args, **kwargs)
 
 
-    def update_ticket_status(self):
-        # Calculate the time difference between the current time and the date_issued
-        time_difference = timezone.now() - self.date_issued
+    # def update_ticket_status(self):
+    #         # Calculate the time difference between the current time and the date_issued
+    #         time_difference = timezone.now() - self.date_issued
 
-        # Set overdue threshold to 10 seconds
-        overdue_threshold = datetime.timedelta(seconds=10)
+    #         # Assuming overdue threshold is 7 days, you can adjust it based on your requirements
+    #         overdue_threshold = datetime.timedelta(days=7)
 
-        # Check if the ticket is not paid and is overdue
-        if self.ticket_status == "PENDING" and time_difference > overdue_threshold:
-            self.ticket_status = "OVERDUE"
-            self.save()  # Save the ticket with the updated status
+    #         # Check if the ticket is not paid and is overdue
+    #         if self.ticket_status == "PENDING" and time_difference > overdue_threshold:
+    #             self.ticket_status = "OVERDUE"
+    #             self.save()  # Save the ticket with the updated status
 
 @receiver(post_save, sender=ticket)
 def update_ticket_status(sender, instance, **kwargs):
