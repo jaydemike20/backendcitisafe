@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from drivers.models import Driver
 from django.contrib.auth import get_user_model
 import datetime
@@ -94,3 +96,20 @@ class ticket(models.Model):
         self.driver_ID.save()      
 
         super().save(*args, **kwargs)
+
+
+    def update_ticket_status(self):
+        # Calculate the time difference between the current time and the date_issued
+        time_difference = timezone.now() - self.date_issued
+
+        # Set overdue threshold to 10 seconds
+        overdue_threshold = datetime.timedelta(seconds=10)
+
+        # Check if the ticket is not paid and is overdue
+        if self.ticket_status == "PENDING" and time_difference > overdue_threshold:
+            self.ticket_status = "OVERDUE"
+            self.save()  # Save the ticket with the updated status
+
+@receiver(post_save, sender=ticket)
+def update_ticket_status(sender, instance, **kwargs):
+    instance.update_ticket_status()

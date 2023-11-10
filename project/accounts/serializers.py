@@ -57,7 +57,12 @@ class CustomUserSerializer(UserSerializer):
             settings.USER_ID_FIELD,
             settings.LOGIN_FIELD,
             "role",
-            "last_name"
+            'first_name',
+            'last_name',
+            'middle_name',
+            'is_active',
+            'position',
+            'profile_picture'  
         )
         read_only_fields = (settings.LOGIN_FIELD,)
 
