@@ -54,7 +54,7 @@ class ticket(models.Model):
     ticket_status = models.CharField(max_length=10, choices=TICKET_STATUS_CHOICES, default="Pending")
 
     place_violation = models.CharField(max_length=255)
-    date_issued = models.DateTimeField(auto_now_add=True, auto_now=False)
+    date_issued = models.DateTimeField(auto_now_add=True)
     signature = models.ImageField(upload_to="signature/", null=True, blank=True)
     # Link the ticket's driver to the vehicle
 
@@ -96,20 +96,3 @@ class ticket(models.Model):
         self.driver_ID.save()      
 
         super().save(*args, **kwargs)
-
-
-    # def update_ticket_status(self):
-    #         # Calculate the time difference between the current time and the date_issued
-    #         time_difference = timezone.now() - self.date_issued
-
-    #         # Assuming overdue threshold is 7 days, you can adjust it based on your requirements
-    #         overdue_threshold = datetime.timedelta(days=7)
-
-    #         # Check if the ticket is not paid and is overdue
-    #         if self.ticket_status == "PENDING" and time_difference > overdue_threshold:
-    #             self.ticket_status = "OVERDUE"
-    #             self.save()  # Save the ticket with the updated status
-
-@receiver(post_save, sender=ticket)
-def update_ticket_status(sender, instance, **kwargs):
-    instance.update_ticket_status()

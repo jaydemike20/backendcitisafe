@@ -134,6 +134,8 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
+# TIME_ZONE = 'Asia/Manila'
+
 
 USE_I18N = True
 
@@ -168,6 +170,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True  
 EMAIL_HOST_USER = 'jaydemike21@gmail.com'
 EMAIL_HOST_PASSWORD = 'epvcwqrbtxtzpgcp'
+
 
 # frond end
 FRONTEND_URL = 'http://localhost:3000'
