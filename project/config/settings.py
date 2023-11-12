@@ -197,3 +197,24 @@ DJOSER = {
 
 
 AUTH_USER_MODEL = "accounts.User"
+
+
+
+#  CELERY SETTINGS
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Manila'
+# CELERY_TASK_ALWAYS_EAGER = True  
+
+
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    'update_ticket_status_every_minute': {
+        'task': 'ticket.tasks.update_ticket_status',
+        'schedule': crontab(minute='*/1'),
+    },
+}
