@@ -207,7 +207,7 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Manila'
-# CELERY_TASK_ALWAYS_EAGER = True  
+CELERY_TASK_ALWAYS_EAGER = True  
 
 
 from celery.schedules import crontab
