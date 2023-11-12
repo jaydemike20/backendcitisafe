@@ -48,7 +48,7 @@ class ticket(models.Model):
         ("PENDING", "Pending"),
         ("PAID", "Paid"),
         ("OVERDUE", "Overdue"),
-        ("DROP", "Drop"),
+        ("DROPPED", "Dropped"),
     ]
     ticket_status = models.CharField(max_length=10, choices=TICKET_STATUS_CHOICES, default="Pending")
 
