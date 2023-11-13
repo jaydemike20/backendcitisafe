@@ -74,8 +74,6 @@ class ticket(models.Model):
 
     MFRTA_TCT_NO = models.BigIntegerField(primary_key=True, default=generate_mfrta_tct_no)
 
-    def __str__(self):
-        return self.MFRTA_TCT_NO
 
     @staticmethod
     def calculate_penalty_amount(violations):
@@ -96,3 +94,6 @@ class ticket(models.Model):
 
         super().save(*args, **kwargs)
 
+
+    def __str__(self):
+        return self.MFRTA_TCT_NO

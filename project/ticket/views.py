@@ -1,4 +1,3 @@
-from datetime import datetime, timedelta, timezone
 from django.http import JsonResponse
 from django.db.models import Count
 from django.shortcuts import render
@@ -13,6 +12,8 @@ from .models import ticket
 import datetime as dt
 import calendar
 import pandas as pd
+from datetime import datetime
+from django.utils import timezone
 
 from django.http import JsonResponse
 
@@ -151,60 +152,56 @@ def ticket_data(request):
 
 
 def ticket_daily(request):
-    # Get the current year, month, and day
-    today = datetime.now()
-    current_year = today.year
-    current_month = today.month
-    current_day = today.day
+    # Get the current date
+    today = timezone.now().date()
 
     # Get the start and end timestamps for the current day
-    start_of_day = datetime(current_year, current_month, current_day, 0, 0, 0)
-    end_of_day = datetime(current_year, current_month, current_day, 23, 59, 59)
+    start_of_day = datetime.combine(today, datetime.min.time())
+    end_of_day = datetime.combine(today, datetime.max.time())
 
     # Get the count of tickets for the current day
     tickets_count = ticket.objects.filter(date_issued__range=[start_of_day, end_of_day]).count()
 
     # Return the ticket count as JSON response
     return JsonResponse({"total_tickets": tickets_count})
-
 # Create your views here.
 
 class penaltyListCreateAPIView(ListCreateAPIView):
     serializer_class = penaltySerializers
     queryset = penalty.objects.all()
-    permission_classes = [IsAuthenticated & (AdminPermission)]
+    permission_classes = [IsAuthenticated & (AdminPermission | EnforcerPermission | TreasurerPermission)]
 
 
 class penaltyRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = penaltySerializers
     queryset = penalty.objects.all()
-    permission_classes = [IsAuthenticated & (AdminPermission)]
+    permission_classes = [IsAuthenticated & (AdminPermission | EnforcerPermission | TreasurerPermission)]
     
 
 
 class violationListCreateAPIView(ListCreateAPIView):
     serializer_class = violationSerializer
     queryset = violation.objects.all()
-    permission_classes = [IsAuthenticated & (AdminPermission)]
+    permission_classes = [IsAuthenticated & (AdminPermission | EnforcerPermission | TreasurerPermission)]
 
 
 class violationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = violationSerializer
     queryset = violation.objects.all()
-    permission_classes = [IsAuthenticated & (AdminPermission)]
+    permission_classes = [IsAuthenticated & (AdminPermission | EnforcerPermission | TreasurerPermission)]
 
 
 
 class trafficviolationListCreateAPIView(ListCreateAPIView):
     serializer_class = traffic_violationSerializer
     queryset = traffic_violation.objects.all()
-    permission_classes = [IsAuthenticated & (AdminPermission)]
+    permission_classes = [IsAuthenticated & (AdminPermission | EnforcerPermission | TreasurerPermission)]
 
 
 class trafficviolationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = traffic_violationSerializer
     queryset = traffic_violation.objects.all()
-    permission_classes = [IsAuthenticated & (AdminPermission)]
+    permission_classes = [IsAuthenticated & (AdminPermission | EnforcerPermission | TreasurerPermission)]
 
 
 class ticketListCreateAPIView(ListCreateAPIView):
