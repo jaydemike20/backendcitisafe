@@ -210,7 +210,7 @@ class trafficviolationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView)
 class ticketListCreateAPIView(ListCreateAPIView):
     serializer_class = ticketSerializer
     queryset = ticket.objects.all()
-    permission_classes = [IsAuthenticated & (EnforcerPermission)]
+    permission_classes = [IsAuthenticated & (AdminPermission | EnforcerPermission | TreasurerPermission)]
 
     # def get_queryset(self):
     #     # Filter traffic tickets based on the logged-in officer
