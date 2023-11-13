@@ -24,17 +24,17 @@ class VehicleTypeRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 class RegisteredOwnerListCreateAPIView(ListCreateAPIView):
     serializer_class = RegisteredOwnerSerializers
     queryset = registered_owner.objects.all()
-    # permission_classes = [IsAuthenticated & (EnforcerPermission & AdminPermission)]
+    permission_classes = [IsAuthenticated & (EnforcerPermission | AdminPermission)]
 
 class RegisteredOwnerRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = RegisteredOwnerSerializers
     queryset = registered_owner.objects.all()
-    # permission_classes = [IsAuthenticated & (EnforcerPermission & AdminPermission)]
-
+    permission_classes = [IsAuthenticated & (EnforcerPermission | AdminPermission)]
+    
 class VehicleListCreateAPIView(ListCreateAPIView):
     serializer_class = VehicleSerializers
     queryset = vehicle.objects.all()
-    # permission_classes = [IsAuthenticated & (EnforcerPermission | AdminPermission)]
+    permission_classes = [IsAuthenticated & (EnforcerPermission | AdminPermission)]
 
     def perform_create(self, serializer):
         # Set the user as the authenticated user when creating a driver instance
@@ -43,4 +43,4 @@ class VehicleListCreateAPIView(ListCreateAPIView):
 class VehicleRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = VehicleSerializers
     queryset = vehicle.objects.all()
-    permission_classes = [IsAuthenticated & (EnforcerPermission & AdminPermission)]
+    permission_classes = [IsAuthenticated & (EnforcerPermission | AdminPermission)]

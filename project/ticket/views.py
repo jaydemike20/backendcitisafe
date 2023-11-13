@@ -172,20 +172,20 @@ def ticket_daily(request):
 class penaltyListCreateAPIView(ListCreateAPIView):
     serializer_class = penaltySerializers
     queryset = penalty.objects.all()
-    # permission_classes = [IsAuthenticated & (AdminPermission)]
+    permission_classes = [IsAuthenticated & (AdminPermission)]
 
 
 class penaltyRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = penaltySerializers
     queryset = penalty.objects.all()
-    # permission_classes = [IsAuthenticated & (AdminPermission)]
+    permission_classes = [IsAuthenticated & (AdminPermission)]
     
 
 
 class violationListCreateAPIView(ListCreateAPIView):
     serializer_class = violationSerializer
     queryset = violation.objects.all()
-    # permission_classes = [IsAuthenticated & (AdminPermission)]
+    permission_classes = [IsAuthenticated & (AdminPermission)]
 
 
 class violationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
@@ -198,7 +198,7 @@ class violationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 class trafficviolationListCreateAPIView(ListCreateAPIView):
     serializer_class = traffic_violationSerializer
     queryset = traffic_violation.objects.all()
-    # permission_classes = [IsAuthenticated & (AdminPermission)]
+    permission_classes = [IsAuthenticated & (AdminPermission)]
 
 
 class trafficviolationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
@@ -210,7 +210,7 @@ class trafficviolationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView)
 class ticketListCreateAPIView(ListCreateAPIView):
     serializer_class = ticketSerializer
     queryset = ticket.objects.all()
-    # permission_classes = [IsAuthenticated & (EnforcerPermission)]
+    permission_classes = [IsAuthenticated & (EnforcerPermission)]
 
     # def get_queryset(self):
     #     # Filter traffic tickets based on the logged-in officer

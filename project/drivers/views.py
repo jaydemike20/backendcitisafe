@@ -13,7 +13,7 @@ from accounts.permissions import EnforcerPermission, AdminPermission
 class ClassificationListCreateAPIView(ListCreateAPIView):
     serializer_class = ClassificationSerializer
     queryset = Classification.objects.all()
-    # permission_classes = [AdminPermission]
+    permission_classes = [AdminPermission]
 
 class ClassificationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = ClassificationSerializer
@@ -23,7 +23,7 @@ class ClassificationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 class DriverListCreateAPIView(ListCreateAPIView):
     serializer_class = DriverSerializer
     queryset = Driver.objects.all()
-    # permission_classes = [IsAuthenticated & (EnforcerPermission)]
+    permission_classes = [IsAuthenticated & (EnforcerPermission)]
 
 
     # def get_queryset(self):
