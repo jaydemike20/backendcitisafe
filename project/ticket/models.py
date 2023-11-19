@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from drivers.models import Driver
+from vehicles.models import vehicle
 from django.contrib.auth import get_user_model
 import datetime
 
@@ -42,7 +43,7 @@ class ticket(models.Model):
     driver_ID = models.ForeignKey(Driver, on_delete=models.CASCADE)
     user_ID = models.ForeignKey(User, on_delete=models.CASCADE)
     violations = models.ForeignKey(traffic_violation, on_delete=models.CASCADE)
-    vehicle = models.ForeignKey('vehicles.vehicle', on_delete=models.CASCADE, related_name='driver_tickets', blank=True, null=True)
+    vehicle = models.ForeignKey('vehicles.vehicle', on_delete=models.CASCADE, related_name='driver_tickets')
 
     TICKET_STATUS_CHOICES = [
         ("PENDING", "Pending"),
@@ -89,8 +90,10 @@ class ticket(models.Model):
     
     def save(self, *args, **kwargs):
         # Increment the offenses_count for the driver associated with this ticket
-        self.driver_ID.offenses_count += 1
-        self.driver_ID.save()      
+
+        if self.MFRTA_TCT_NO:
+            self.driver_ID.offenses_count += 1
+            self.driver_ID.save()      
 
         super().save(*args, **kwargs)
 

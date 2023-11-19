@@ -28,7 +28,7 @@ class Driver(models.Model):
     
     officer = models.ForeignKey(User, on_delete=models.CASCADE)
     classification = models.CharField(max_length=2, choices=CLASSIFICATION_CHOICES, null=True, blank=True)
-    license_number = models.CharField(max_length=15, null=True, blank=True)
+    license_number = models.CharField(max_length=50, null=True, blank=True)
     # full name
     first_name = models.CharField(max_length=100)
     middle_initial = models.CharField(max_length=1, null=True, blank=True)
@@ -43,17 +43,18 @@ class Driver(models.Model):
         return f"{self.first_name} {self.last_name}"
     
     def save(self, *args, **kwargs):
-        if self.license_number is None:
+        if self.license_number is None or self.license_number == '':
             self.license_number = 'No License'
-            
-        if self.license_number is not None:
-            if self.classification is None:
-                raise ValueError("Classification cannot be null when license_number is not null.")
+            self.classification = None  # or set a default classification for cases without a license
+        elif self.license_number != 'No License' and self.classification is None:
+            raise ValueError("Classification cannot be null when license_number is not null.")
 
-            # Check for uniqueness of license_number
-            if Driver.objects.filter(license_number=self.license_number).exclude(id=self.id).exists():
+        # Check for uniqueness of license_number, but skip if it's 'No License' or an empty string
+        if self.license_number not in ['No License', '']:
+            duplicate_drivers = Driver.objects.filter(license_number=self.license_number).exclude(id=self.id)
+            if duplicate_drivers.exists():
                 raise ValidationError("License number must be unique.")
-                
+
         super().save(*args, **kwargs)
 
 

@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ValidationError
 from drivers.models import Driver
 from django.contrib.auth import get_user_model
 
@@ -39,13 +40,12 @@ class vehicle(models.Model):
     officer = models.ForeignKey(User, on_delete=models.CASCADE)
     # foreign keys
     driverID = models.ForeignKey(Driver, on_delete=models.CASCADE)
-
     # other fields
 
     name = models.CharField(max_length=100)  
     address = models.CharField(max_length=255)
     contact_number = models.CharField(max_length=50, null=True, blank=True)    
-    plate_number = models.CharField(max_length=50)
+    plate_number = models.CharField(max_length=50, null=True, blank=True)
     make = models.CharField(max_length=255, null=True, blank=True)
     color = models.CharField(max_length=50, null=True, blank=True)
     vehicle_class = models.CharField(max_length=255, null=True, blank=True)
@@ -53,6 +53,18 @@ class vehicle(models.Model):
     vehicle_model = models.CharField(max_length=255, null=True, blank=True)
     date_issued = models.DateTimeField(auto_created=True, auto_now=True)
 
+    # def save(self, *args, **kwargs):
+    #     if self.plate_number is None or self.plate_number == '':
+    #         self.plate_number = 'No Plate Number'
+
+    #     # Check for uniqueness of license_number, but skip if it's 'No License' or an empty string
+    #     if self.plate_number not in ['No Plate Number', '']:
+    #         duplicate_vehicles = vehicle.objects.filter(license_number=self.plate_number).exclude(id=self.id)
+    #         if duplicate_vehicles.exists():
+    #             raise ValidationError("Plate number must be unique.")
+
+    #     super().save(*args, **kwargs)
+    
     def __str__(self):
         return self.plate_number
     
