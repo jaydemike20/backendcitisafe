@@ -109,13 +109,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # }
 
 DATABASES = {
-    "default": {
-    "ENGINE": "django.db.backends.mysql",
-    "NAME": "citisafeapp",
-    "USER": "root",
-    "PASSWORD": "admin",
-    "HOST": "localhost",  # Change this if your PostgreSQL server is on a different host
-    "PORT": "3306", 
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'jaydemike$citisafeapp',  # Replace with your actual database name
+        'USER': 'jaydemike',
+        'PASSWORD': '@engracia123',  # Set the MySQL password you've chosen
+        'HOST': 'jaydemike.mysql.pythonanywhere-services.com',
+        'PORT': '3306',  # MySQL default port
     }
 }
 
