@@ -5,6 +5,7 @@ from drivers.models import Driver
 from vehicles.models import vehicle
 from django.contrib.auth import get_user_model
 import datetime
+from django.utils import timezone as timez
 
 User = get_user_model()
 

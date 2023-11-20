@@ -57,13 +57,6 @@ class vehicle(models.Model):
     #     if self.plate_number is None or self.plate_number == '':
     #         self.plate_number = 'No Plate Number'
 
-    #     # Check for uniqueness of license_number, but skip if it's 'No License' or an empty string
-    #     if self.plate_number not in ['No Plate Number', '']:
-    #         duplicate_vehicles = vehicle.objects.filter(license_number=self.plate_number).exclude(id=self.id)
-    #         if duplicate_vehicles.exists():
-    #             raise ValidationError("Plate number must be unique.")
-
-    #     super().save(*args, **kwargs)
     
     def __str__(self):
         return self.plate_number

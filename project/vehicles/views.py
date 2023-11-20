@@ -3,7 +3,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from vehicles.models import vehicle, vehicle_type, registered_owner
 from vehicles.serializers import VehicleSerializers, VehicleTypeSerializers, RegisteredOwnerSerializers
 from rest_framework.permissions import IsAuthenticated
-from accounts.permissions import EnforcerPermission, AdminPermission
+from accounts.permissions import EnforcerPermission, AdminPermission, TreasurerPermission
 
 
 # Create your views here.
@@ -34,7 +34,7 @@ class RegisteredOwnerRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 class VehicleListCreateAPIView(ListCreateAPIView):
     serializer_class = VehicleSerializers
     queryset = vehicle.objects.all()
-    permission_classes = [IsAuthenticated & (EnforcerPermission | AdminPermission)]
+    permission_classes = [IsAuthenticated & (AdminPermission | EnforcerPermission | TreasurerPermission)]
 
     def perform_create(self, serializer):
         # Set the user as the authenticated user when creating a driver instance
@@ -43,4 +43,4 @@ class VehicleListCreateAPIView(ListCreateAPIView):
 class VehicleRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = VehicleSerializers
     queryset = vehicle.objects.all()
-    permission_classes = [IsAuthenticated & (EnforcerPermission | AdminPermission)]
+    permission_classes = [IsAuthenticated & (AdminPermission | EnforcerPermission | TreasurerPermission)]
