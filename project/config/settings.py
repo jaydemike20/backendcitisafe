@@ -179,14 +179,14 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True  
-EMAIL_HOST_USER = 'jaydemike21@gmail.com'
-EMAIL_HOST_PASSWORD = 'epvcwqrbtxtzpgcp'
+EMAIL_HOST_USER = 'eTCMFBukidnon@gmail.com'
+EMAIL_HOST_PASSWORD = 'uavqnvuezpfnxyjf'
 
 
 # frond end
-FRONTEND_URL = 'http://localhost:3000'
+FRONTEND_URL = 'https://sprincessgenevieve.github.io/citisafeweb/#'
 
-DEFAULT_FROM_EMAIL = 'jaydemike21@gmail.com'
+DEFAULT_FROM_EMAIL = 'eTCMFBukidnon@gmail.com'
 # my djoser
 DJOSER = {
     "SEND_CONFIRMATION_EMAIL": True,
@@ -203,7 +203,7 @@ DJOSER = {
         'password_reset': 'accounts.email.CustomPasswordResetEmail',
         'password_changed_confirmation': 'accounts.email.PasswordChangedConfirmationEmail'        
     },    
-    'DEFAULT_FROM_EMAIL': 'jaydemike21@gmail.com', 
+    'DEFAULT_FROM_EMAIL': 'eTCMFBukidnon@gmail.com', 
 }
 
 
