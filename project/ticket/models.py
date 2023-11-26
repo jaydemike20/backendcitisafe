@@ -1,6 +1,10 @@
+import json
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from channels.layers import get_channel_layer
+
+
 from drivers.models import Driver
 from vehicles.models import vehicle
 from django.contrib.auth import get_user_model
@@ -8,7 +12,6 @@ import datetime
 from django.utils import timezone as timez
 
 User = get_user_model()
-
 # Create your models here.
 class penalty(models.Model):
     description = models.CharField(max_length=255)
@@ -90,14 +93,40 @@ class ticket(models.Model):
         
     
     def save(self, *args, **kwargs):
-        # Increment the offenses_count for the driver associated with this ticket
-
-        if self.MFRTA_TCT_NO:
-            self.driver_ID.offenses_count += 1
-            self.driver_ID.save()      
+        # Check if the driver has a valid license number
+        if self.driver_ID and self.driver_ID.license_number:
+            # Check if the ticket is being created (not updating)
+            if not self.pk:
+                # Increment the offenses_count for the driver associated with this ticket
+                self.driver_ID.offenses_count += 1
+                self.driver_ID.save()
 
         super().save(*args, **kwargs)
-
+        
 
     def __str__(self):
-        return self.MFRTA_TCT_NO
+        return str(self.MFRTA_TCT_NO)
+
+# Add this signal receiver at the end of your models.py
+@receiver(post_save, sender=ticket)
+def send_ticket_notification(sender, instance, **kwargs):
+    # Get the channel layer
+    channel_layer = get_channel_layer()
+
+    # Send a message to the "broadcast" group
+    async def send_notification():
+        message = json.dumps({'type': 'ticket.notification', 'message': f'New ticket created: {instance.MFRTA_TCT_NO}'})
+        await channel_layer.group_send('broadcast', {'type': 'send_notification', 'message': message})
+
+    # Run the function in the event loop
+    from asgiref.sync import async_to_sync
+    async_to_sync(send_notification)()
+
+    # If the ticket status is updated, send a status update notification
+    if kwargs.get('update_fields') and 'ticket_status' in kwargs['update_fields']:
+        async def send_status_update():
+            status_message = json.dumps({'type': 'ticket.status_update', 'message': f'Ticket {instance.MFRTA_TCT_NO} status updated to {instance.ticket_status}'})
+            await channel_layer.group_send('broadcast', {'type': 'send_notification', 'message': status_message})
+
+        # Run the function in the event loop
+        async_to_sync(send_status_update)()

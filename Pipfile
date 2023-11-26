@@ -10,6 +10,11 @@ djangorestframework = "*"
 djoser = "*"
 pillow = "*"
 django-cors-headers = "*"
+celery = "*"
+mysqlclient = "*"
+pandas = "*"
+channels = "*"
+channels-redis = "*"
 
 [dev-packages]
 

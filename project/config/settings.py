@@ -32,11 +32,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    "daphne",
     'django.contrib.staticfiles',
     'rest_framework',
     'djoser',
@@ -46,7 +48,11 @@ INSTALLED_APPS = [
     "vehicles",
     "corsheaders",
     "ticket",
+
 ]
+
+ASGI_APPLICATION = "config.asgi.application"
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -86,12 +92,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 
-# # connected to the postgreSQL
+# connected to the postgreSQL
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -111,10 +125,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'jaydemike$citisafeapp',  # Replace with your actual database name
-        'USER': 'jaydemike',
-        'PASSWORD': '@engracia123',  # Set the MySQL password you've chosen
-        'HOST': 'jaydemike.mysql.pythonanywhere-services.com',
+        'NAME': 'citisafeapp',  # Replace with your actual database name
+        'USER': 'root',
+        'PASSWORD': 'admin',  # Set the MySQL password you've chosen
+        'HOST': 'localhost',
         'PORT': '3306',  # MySQL default port
     }
 }
