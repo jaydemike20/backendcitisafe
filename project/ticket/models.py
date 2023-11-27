@@ -117,7 +117,7 @@ def send_ticket_notification(sender, instance, update_fields, **kwargs):
 
     # Send a message to the "broadcast" group
     async def send_notification():
-        message = json.dumps({'type': 'ticket.notification', 'message': f'New Updated Ticket: {instance.MFRTA_TCT_NO}'})
+        message = json.dumps({'type': 'ticket.notification', 'message': f'There has been an update of the Records table!: {instance.MFRTA_TCT_NO}'})
         await channel_layer.group_send('broadcast', {'type': 'send_notification', 'message': message})
 
     # Run the function in the event loop
