@@ -21,16 +21,7 @@ from django.http import JsonResponse
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 
-def notify_ticket_update(ticket_id, message):
-    channel_layer = get_channel_layer()
 
-    async_to_sync(channel_layer.group_send)(
-        f"ticket_{ticket_id}",
-        {
-            "type": "notify.ticket_event",
-            "message": message,
-        },
-    )
 
 def traffic_violation_count(request):
     # Get all traffic violations
@@ -163,7 +154,6 @@ def ticket_data(request):
 
 
     return JsonResponse(ticket_data)
-
 
 
 def ticket_daily(request):

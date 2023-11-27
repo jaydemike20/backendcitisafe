@@ -96,26 +96,28 @@ class ticket(models.Model):
         # Check if the driver has a valid license number
         if self.driver_ID and self.driver_ID.license_number:
             # Check if the ticket is being created (not updating)
-            if not self.pk:
+            is_new_ticket = self._state.adding  # This attribute indicates whether the instance is being saved to the database for the first time
+
+            if is_new_ticket:
                 # Increment the offenses_count for the driver associated with this ticket
                 self.driver_ID.offenses_count += 1
                 self.driver_ID.save()
 
         super().save(*args, **kwargs)
-        
+
 
     def __str__(self):
         return str(self.MFRTA_TCT_NO)
 
 # Add this signal receiver at the end of your models.py
 @receiver(post_save, sender=ticket)
-def send_ticket_notification(sender, instance, **kwargs):
+def send_ticket_notification(sender, instance, update_fields, **kwargs):
     # Get the channel layer
     channel_layer = get_channel_layer()
 
     # Send a message to the "broadcast" group
     async def send_notification():
-        message = json.dumps({'type': 'ticket.notification', 'message': f'New ticket created: {instance.MFRTA_TCT_NO}'})
+        message = json.dumps({'type': 'ticket.notification', 'message': f'New Updated Ticket: {instance.MFRTA_TCT_NO}'})
         await channel_layer.group_send('broadcast', {'type': 'send_notification', 'message': message})
 
     # Run the function in the event loop
@@ -123,10 +125,12 @@ def send_ticket_notification(sender, instance, **kwargs):
     async_to_sync(send_notification)()
 
     # If the ticket status is updated, send a status update notification
-    if kwargs.get('update_fields') and 'ticket_status' in kwargs['update_fields']:
-        async def send_status_update():
-            status_message = json.dumps({'type': 'ticket.status_update', 'message': f'Ticket {instance.MFRTA_TCT_NO} status updated to {instance.ticket_status}'})
-            await channel_layer.group_send('broadcast', {'type': 'send_notification', 'message': status_message})
+    if update_fields and 'ticket_status' in update_fields:
+        ticket_status = getattr(instance, 'ticket_status', None)
+        if ticket_status:
+            async def send_status_update():
+                status_message = json.dumps({'type': 'ticket.status_update', 'message': f'Ticket {instance.MFRTA_TCT_NO} status updated to {ticket_status}'})
+                await channel_layer.group_send('broadcast', {'type': 'send_notification', 'message': status_message})
 
-        # Run the function in the event loop
-        async_to_sync(send_status_update)()
+            # Run the function in the event loop
+            async_to_sync(send_status_update)()
