@@ -10,8 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
+from dotenv import load_dotenv  # Python dotenv
 import os
+
+load_dotenv()  # loads the configs from .env
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -90,7 +96,7 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 CHANNEL_LAYERS = {
     "default": {
@@ -106,32 +112,23 @@ CHANNEL_LAYERS = {
 
 
 # connected to the postgreSQL
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-#     # "default": {
-#     # "ENGINE": "django.db.backends.postgresql",
-#     # "NAME": "backendcitisafe",
-#     # "USER": "postgres",
-#     # "PASSWORD": "@Jayde15",
-#     # "HOST": "localhost",  # Change this if your PostgreSQL server is on a different host
-#     # "PORT": "8080", 
-#     # },
-    
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'citisafeapp',  # Replace with your actual database name
-        'USER': 'root',
-        'PASSWORD': 'admin',  # Set the MySQL password you've chosen
-        'HOST': 'localhost',
-        'PORT': '3306',  # MySQL default port
-    }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    },
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'citisafeapp',  # Replace with your actual database name
+#         'USER': 'root',
+#         'PASSWORD': 'admin',  # Set the MySQL password you've chosen
+#         'HOST': 'localhost',
+#         'PORT': '3306',  # MySQL default port
+#     }
+# }
 
 
 # Password validation
@@ -182,20 +179,24 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True
 
 
-# mailtrap config
-# EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-# EMAIL_HOST_USER = '061df45eb6ebea'
-# EMAIL_HOST_PASSWORD = '98494b8a33eec4'
-# EMAIL_PORT = '2525'
+# Email credentials
+EMAIL_HOST = ''
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = ''
+EMAIL_USE_TLS = False
 
-# GMAIL
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True  
-EMAIL_HOST_USER = 'eTCMFBukidnon@gmail.com'
-EMAIL_HOST_PASSWORD = 'uavqnvuezpfnxyjf'
-
+if (DEBUG == True):
+    EMAIL_HOST = str(os.getenv('DEV_EMAIL_HOST'))
+    EMAIL_HOST_USER = str(os.getenv('DEV_EMAIL_HOST_USER'))
+    EMAIL_HOST_PASSWORD = str(os.getenv('DEV_EMAIL_HOST_PASSWORD'))
+    EMAIL_PORT = str(os.getenv('DEV_EMAIL_PORT'))
+else:
+    EMAIL_HOST = str(os.getenv('PROD_EMAIL_HOST'))
+    EMAIL_HOST_USER = str(os.getenv('PROD_EMAIL_HOST_USER'))
+    EMAIL_HOST_PASSWORD = str(os.getenv('PROD_EMAIL_HOST_PASSWORD'))
+    EMAIL_PORT = str(os.getenv('PROD_EMAIL_PORT'))
+    EMAIL_USE_TLS = str(os.getenv('PROD_EMAIL_TLS'))
 
 # frond end
 FRONTEND_URL = 'https://sprincessgenevieve.github.io/citisafeweb/#'

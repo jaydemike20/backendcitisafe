@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  # Django App
+  django_backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: stude_backend:latest
+    ports:
+      - "8083:8000"  # Expose port 8083 for the web server
+    environment:
+      - PYTHONBUFFERED=1
+    command: ["sh", "-c", "python project/manage.py spectacular --color --file stude/schema.yml && python project/manage.py collectstatic --noinput && python project/manage.py makemigrations && python project/manage.py custom_migrate && python project/manage.py runserver"]
+    volumes:
+      - .:/code       # For hotreloading
+    depends_on:
+      - redis  # Add this to make sure Django can reach the Redis server
+
+  # Redis Server
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"  # Expose Redis default port
+
+volumes:
+  stude:
