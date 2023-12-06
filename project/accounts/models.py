@@ -1,5 +1,8 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+from django.db.models.signals import post_migrate
+from django.dispatch import receiver
+import os
 
 # models for accounts
 # table for profile of rta officer
@@ -76,3 +79,21 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username + "'s Profile"
+    
+
+@receiver(post_migrate)
+def create_superuser(sender, **kwargs):
+    if sender.name == 'accounts':
+        username = os.getenv('DJANGO_ADMIN_USERNAME')
+        email = os.getenv('DJANGO_ADMIN_EMAIL')
+        password = os.getenv('DJANGO_ADMIN_PASSWORD')
+
+        if not User.objects.filter(username=username).exists():
+            # Create the superuser with is_active set to False
+            superuser = User.objects.create_superuser(
+                username=username, email=email, password=password, role="ADMIN")
+
+            # Activate the superuser
+            superuser.is_active = True
+            print('Created admin account')
+            superuser.save()

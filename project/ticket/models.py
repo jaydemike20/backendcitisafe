@@ -54,8 +54,9 @@ class ticket(models.Model):
         ("PAID", "Paid"),
         ("OVERDUE", "Overdue"),
         ("DROPPED", "Dropped"),
+        ("COMMUNITY SERVICE", "Community Service")
     ]
-    ticket_status = models.CharField(max_length=10, choices=TICKET_STATUS_CHOICES, default="Pending")
+    ticket_status = models.CharField(max_length=50, choices=TICKET_STATUS_CHOICES, default="Pending")
 
     place_violation = models.CharField(max_length=255)
     date_issued = models.DateTimeField(auto_now_add=True)

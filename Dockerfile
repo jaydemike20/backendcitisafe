@@ -21,10 +21,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN python project/manage.py makemigrations
 
 # Run custom migrate
-RUN python project/manage.py custom_migrate
-
-# Generate DRF Spectacular Documentation
-RUN python project/manage.py spectacular --color --file stude/schema.yml
+RUN python project/manage.py migrate
 
 # Expose port 8000 for the web server
 EXPOSE 8000

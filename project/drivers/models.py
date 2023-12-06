@@ -31,7 +31,7 @@ class Driver(models.Model):
     license_number = models.CharField(max_length=50, null=True, blank=True)
     # full name
     first_name = models.CharField(max_length=100)
-    middle_initial = models.CharField(max_length=1, null=True, blank=True)
+    middle_initial = models.CharField(max_length=100, null=True, blank=True)
     last_name = models.CharField(max_length=100)
     address = models.CharField(max_length=255)
     birthdate = models.DateField()
