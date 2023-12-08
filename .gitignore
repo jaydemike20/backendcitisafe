@@ -1,2 +1,10 @@
 project/.env
 project/static
+project/media
+
+project/accounts/__pycache__
+project/api/__pycache__
+project/config/__pycache__
+project/drivers/__pycache__
+project/ticket/__pycache__
+project/vehicles/__pycache__
