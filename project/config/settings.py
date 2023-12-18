@@ -77,6 +77,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",    
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -103,7 +104,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("localhost", 6380)],
+            "hosts": [("10.0.10.4", 6380)],
         },
     },
 }
@@ -156,8 +157,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
-# TIME_ZONE = 'Asia/Manila'
+TIME_ZONE = 'Asia/Manila'
 
 
 USE_I18N = True
@@ -228,8 +228,8 @@ AUTH_USER_MODEL = "accounts.User"
 
 
 #  CELERY SETTINGS
-CELERY_BROKER_URL = 'redis://127.0.0.1:6380'
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6380'
+CELERY_BROKER_URL = '10.0.10.4:6380'
+CELERY_RESULT_BACKEND = '10.0.10.4:6380'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
